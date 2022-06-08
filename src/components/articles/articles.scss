@@ -1,0 +1,89 @@
+.article {
+  width: 941px;
+  height: 140px;
+  background-color: white;
+  margin: 0 auto;
+  list-style: none;
+  padding: 15px 14px 0 19px;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+  border-radius: 5px;
+  margin-bottom: 26px;
+}
+
+.pagination {
+  width: 400px;
+  margin: 0 auto;
+  padding-left: 50px;
+  padding-bottom: 20px;
+}
+
+.header,
+.profile-name {
+  display: flex;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.profile {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.profile-name {
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.name {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.article-name {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  color: #1890ff;
+}
+
+.label-like {
+  font-size: 15px;
+  line-height: 22px;
+  align-self: center;
+  padding-left: 10px;
+}
+
+.like-count {
+  padding-left: 5px;
+}
+
+.title-text {
+  display: flex;
+}
+
+.date {
+  font-size: 12px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 23px;
+  margin-left: 12px;
+}
+
+.tags {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.tag {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  padding: 2px;
+}
