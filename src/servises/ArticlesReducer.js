@@ -3,7 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   articles: [],
-  article: [],
+  article: {
+    slug: "",
+    title: "",
+    description: "",
+    body: "",
+    createdAt: "",
+    updatedAt: "",
+    favorited: false,
+    favoritesCount: 0,
+    tagList: [],
+  },
+  edit: false,
   status: "idle",
   offset: 0,
   stopFetch: "false",
@@ -22,8 +33,18 @@ const articlesSlice = createSlice({
     },
     getArticle(state, action) {
       state.article = action.payload.article;
+      state.offset = 0;
+    },
+    likeArticleAction(state, action) {
+      state.article.favorited = action.payload.article.favorited;
+      if (action.payload.article.favorited) {
+        state.article.favoritesCount++;
+      } else {
+        state.article.favoritesCount--;
+      }
     },
   },
 });
-export const { actionArticles, nextPage, getArticle } = articlesSlice.actions;
+export const { actionArticles, nextPage, getArticle, likeArticleAction } =
+  articlesSlice.actions;
 export default articlesSlice.reducer;

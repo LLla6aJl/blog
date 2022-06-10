@@ -7,6 +7,7 @@ import { registerUser } from "../../servises/userReducer";
 import "./registration.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { newUser } from "../../servises/servises";
+import { nextPage } from "../../servises/ArticlesReducer";
 import * as Yup from "yup";
 export default function Registration() {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ export default function Registration() {
         setError(true);
       } else {
         dispatch(registerUser(res));
+        dispatch(nextPage(1));
         reset();
         navigate("/");
       }

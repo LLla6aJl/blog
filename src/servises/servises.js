@@ -1,21 +1,3 @@
-export async function getArticles(offset = 0) {
-  // eslint-disable-next-line no-return-await
-  const requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-
-  const res = await fetch(
-    `https://kata.academy:8021/api/articles?limit=5&offset=${offset}`,
-    requestOptions
-  );
-  if (!res.ok) {
-    return getArticles();
-  }
-  // eslint-disable-next-line no-return-await
-  return await res.json();
-}
-
 export async function newUser(data) {
   const { username, email, password } = data;
   const raw = JSON.stringify({
@@ -48,7 +30,9 @@ export async function loginUser(data) {
   });
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json;charset=utf-8" },
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
     body: raw,
     redirect: "follow",
   };
@@ -59,15 +43,15 @@ export async function loginUser(data) {
   return await res;
 }
 
-export async function updateUserFetch(data, token) {
+export async function updateUserFetch(data, token, oldPassword, oldAvatar) {
   const { email, username, password, avatar } = data;
 
   const raw = JSON.stringify({
     user: {
       username,
       email,
-      password,
-      image: avatar,
+      password: password ? password : oldPassword,
+      image: avatar ? avatar : oldAvatar,
     },
   });
   const requestOptions = {
@@ -81,6 +65,51 @@ export async function updateUserFetch(data, token) {
   };
   let res = await fetch(
     "https://kata.academy:8021/api/user",
+    requestOptions
+  ).then((response) => response.json());
+  return await res;
+}
+
+export async function fetchLike(slug, token, favorited) {
+  const requestOptions = {
+    method: favorited ? "DELETE" : "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+    redirect: "follow",
+  };
+
+  let res = await fetch(
+    `https://kata.academy:8021/api/articles/${slug}/favorite`,
+    requestOptions
+  ).then((response) => response.json());
+  return await res;
+}
+
+export async function createArticle(data, token, tagsList) {
+  console.log(tagsList);
+  const { title, description, text } = data;
+  const raw = JSON.stringify({
+    article: {
+      title,
+      description,
+      body: text,
+      tagList: tagsList,
+    },
+  });
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+    body: raw,
+    redirect: "follow",
+  };
+
+  let res = await fetch(
+    `https://kata.academy:8021/api/articles`,
     requestOptions
   ).then((response) => response.json());
   return await res;

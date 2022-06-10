@@ -10,22 +10,36 @@ import EditProfile from "../reg_login_edit/editProfile";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { actionArticles } from "../../servises/ArticlesReducer";
+import CreateArticle from "../article/createArticle";
 function App() {
   const dispatch = useDispatch();
 
   const offset = useSelector((state) => state.articles.offset);
-
-  const fetchArticles = (offset) =>
-    // eslint-disable-next-line no-shadow
-    function (dispatch) {
-      fetch(`https://kata.academy:8021/api/articles?limit=5&offset=${offset}`)
-        .then((response) => response.json())
-        .then((json) => dispatch(actionArticles(json)));
-    };
+  const isLogged = useSelector((state) => state.user.isLogged);
+  const token = useSelector((state) => state.user.token);
+  const article = useSelector((state) => state.articles.article);
 
   useEffect(() => {
+    const fetchArticles = (offset) =>
+      // eslint-disable-next-line no-shadow
+      function (dispatch) {
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            Authorization: `Bearer ${isLogged ? token : null}`,
+          },
+          redirect: "follow",
+        };
+        fetch(
+          `https://kata.academy:8021/api/articles?limit=5&offset=${offset}`,
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((json) => dispatch(actionArticles(json)));
+      };
     dispatch(fetchArticles(offset));
-  }, [offset, dispatch]);
+  }, [offset, dispatch, isLogged, token, article]);
 
   return (
     <div className={classes["app"]}>
@@ -45,6 +59,7 @@ function App() {
           <Route path="/sign-up" element={<Registration />} />
           <Route path="/sign-in" element={<Login />} />
           <Route path="/profile" element={<EditProfile />} />
+          <Route path="/new-article" element={<CreateArticle />} />
         </Routes>
       </div>
     </div>

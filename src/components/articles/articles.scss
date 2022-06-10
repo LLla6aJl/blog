@@ -43,11 +43,53 @@
   line-height: 28px;
 }
 
+.tag-item {
+  width: 300px;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px 12px 8px 12px;
+  display: block;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  margin-right: 18px;
+}
+
+.button-tag {
+  margin-right: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px 36px;
+}
+
+.delete {
+  border: 1px solid #f5222d;
+  color: #f5222d;
+}
+
+.add {
+  border: 1px solid #1890ff;
+  color: #1890ff;
+}
+
+.add-tag-input {
+  width: 300px;
+  margin-right: 18px;
+}
+
 .article-name {
   font-weight: 400;
   font-size: 20px;
   line-height: 28px;
   color: #1890ff;
+}
+
+.full-size {
+  height: 100%;
+  padding-bottom: 20px;
 }
 
 .label-like {
@@ -86,4 +128,32 @@
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 2px;
   padding: 2px;
+  margin-right: 8px;
+}
+
+.text-in-article,
+.tags-inArticle {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.button-article {
+  position: absolute;
+  font-size: 14px;
+  line-height: 22px;
+  background-color: white;
+  border: 1px solid #f5222d;
+  border-radius: 5px;
+  padding: 6px 17px;
+  margin-right: 12px;
+}
+
+.edit {
+  border: 1px solid rgba(82, 196, 26, 1);
+  color: rgba(82, 196, 26, 1);
+  top: 90px;
+  right: 1px;
+}
+
+.delete-article {
+  top: 90px;
 }

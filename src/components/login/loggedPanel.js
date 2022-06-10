@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../servises/userReducer";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+
 export default function LoggedPanel() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function LoggedPanel() {
   };
   return (
     <div className="login-wrap">
-      <Link className="create-article" to={"/articles"}>
+      <Link className="create-article" to={"/new-article"}>
         Create article
       </Link>
       <Link className="profile" to={"/profile"}>

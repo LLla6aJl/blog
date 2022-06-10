@@ -1,14 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { actionLoginUser } from "../../servises/userReducer";
 import "./registration.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginUser } from "../../servises/servises";
+import { nextPage } from "../../servises/ArticlesReducer";
 import * as Yup from "yup";
 export default function Login() {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const formSchema = Yup.object().shape({
@@ -34,7 +36,11 @@ export default function Login() {
     loginUser(data).then((res) => {
       if (res.errors) {
         setError(true);
-      } else dispatch(actionLoginUser(res));
+      } else {
+        dispatch(actionLoginUser(res));
+        dispatch(nextPage(1));
+        navigate("/");
+      }
     });
   };
 
