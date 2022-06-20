@@ -11,6 +11,10 @@ body {
   font-size: 12px;
 }
 
+button {
+  cursor: pointer;
+}
+
 .title {
   line-height: 28px;
   flex-grow: 1;
@@ -29,7 +33,7 @@ body {
 body {
   margin: 0;
   box-sizing: border-box;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 400;
 }
 
@@ -39,8 +43,8 @@ body {
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("./Inter-Regular.ttf") format("truetype");
+  font-family: 'Inter';
+  src: url('./Inter-Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }

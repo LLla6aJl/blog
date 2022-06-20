@@ -1,11 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./components/app/app";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import store, { persistor } from "./servises/store";
-import { PersistGate } from "redux-persist/integration/react";
-const root = ReactDOM.createRoot(document.getElementById("root"));
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import store, { persistor } from './servises/store';
+import App from './components/app/app';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 function update() {
   root.render(

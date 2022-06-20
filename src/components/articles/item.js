@@ -1,10 +1,18 @@
-import { fetchLike } from "../../servises/servises";
-import whiteheart from "../article/white-heart.svg";
-import redheart from "../article/red-heart.svg";
-import { useSelector } from "react-redux";
-import { format } from "date-fns";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-shadow */
+/* eslint-disable react/destructuring-assignment */
+import { useSelector } from 'react-redux';
+import { format } from 'date-fns';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { fetchLike } from '../../servises/servises';
+import whiteheart from '../article/white-heart.svg';
+import redheart from '../article/red-heart.svg';
 
 export default function Item(item) {
   const {
@@ -24,16 +32,15 @@ export default function Item(item) {
   const token = useSelector((state) => state.user.token);
   const isLogged = useSelector((state) => state.user.isLogged);
   const likeArticle = (slug) => {
+    // eslint-disable-next-line no-useless-return
     if (!isLogged) return;
-    else {
-      fetchLike(slug, token, checkFavorite);
-      if (!checkFavorite) {
-        setCheckFavorite(true);
-        setFavoriteCount(favoriteCount + 1);
-      } else {
-        setCheckFavorite(false);
-        setFavoriteCount(favoriteCount - 1);
-      }
+    fetchLike(slug, token, checkFavorite);
+    if (!checkFavorite) {
+      setCheckFavorite(true);
+      setFavoriteCount(favoriteCount + 1);
+    } else {
+      setCheckFavorite(false);
+      setFavoriteCount(favoriteCount - 1);
     }
   };
 
@@ -69,11 +76,20 @@ export default function Item(item) {
               {format(
                 // eslint-disable-next-line camelcase
                 updatedAt ? new Date(updatedAt) : new Date(),
-                "MMMM d, yyyy"
+                'MMMM d, yyyy'
               )}
             </span>
           </div>
-          <img className="avatar" src={image} alt="avatar"></img>
+          <img
+            className="avatar"
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src =
+                'https://static.productionready.io/images/smiley-cyrus.jpg';
+            }}
+            src={image}
+            alt="avatar"
+          />
         </div>
       </div>
       <div className="text">{description}</div>

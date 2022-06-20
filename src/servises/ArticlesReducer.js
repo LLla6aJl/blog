@@ -1,28 +1,29 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   articles: [],
   article: {
-    slug: "",
-    title: "",
-    description: "",
-    body: "",
-    createdAt: "",
-    updatedAt: "",
+    slug: '',
+    title: '',
+    description: '',
+    body: '',
+    createdAt: '',
+    updatedAt: '',
     favorited: false,
     favoritesCount: 0,
     tagList: [],
   },
   edit: false,
-  status: "idle",
+  status: 'idle',
   offset: 0,
-  stopFetch: "false",
+  stopFetch: 'false',
   error: null,
 };
 
 const articlesSlice = createSlice({
-  name: "articles",
+  name: 'articles',
   initialState,
   reducers: {
     actionArticles(state, action) {
@@ -43,8 +44,31 @@ const articlesSlice = createSlice({
         state.article.favoritesCount--;
       }
     },
+    editArticle(state, action) {
+      state.edit = action.payload;
+    },
+    deleteArticle(state) {
+      state.article = {
+        slug: '',
+        title: '',
+        description: '',
+        body: '',
+        createdAt: '',
+        updatedAt: '',
+        favorited: false,
+        favoritesCount: 0,
+        tagList: [],
+      };
+      state.edit = false;
+    },
   },
 });
-export const { actionArticles, nextPage, getArticle, likeArticleAction } =
-  articlesSlice.actions;
+export const {
+  actionArticles,
+  nextPage,
+  getArticle,
+  likeArticleAction,
+  editArticle,
+  deleteArticle,
+} = articlesSlice.actions;
 export default articlesSlice.reducer;

@@ -1,26 +1,30 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { actionLoginUser } from "../../servises/userReducer";
-import "./registration.scss";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginUser } from "../../servises/servises";
-import { nextPage } from "../../servises/ArticlesReducer";
-import * as Yup from "yup";
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+
+import { actionLoginUser } from '../../servises/userReducer';
+import { loginUser } from '../../servises/servises';
+import { nextPage } from '../../servises/ArticlesReducer';
+
+import './registration.scss';
+
 export default function Login() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const formSchema = Yup.object().shape({
     password: Yup.string()
-      .required("Обязательное поле")
-      .min(6, "Пароль должен быть не менее 6 символов")
-      .max(40, "Пароль должен быть не более 40 символов"),
+      .required('Обязательное поле')
+      .min(6, 'Пароль должен быть не менее 6 символов')
+      .max(40, 'Пароль должен быть не более 40 символов'),
     email: Yup.string()
-      .required("Обязательное поле")
-      .email("Введите корректный адрес электронной почты"),
+      .required('Обязательное поле')
+      .email('Введите корректный адрес электронной почты'),
   });
 
   const {
@@ -28,7 +32,7 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: 'onBlur',
     resolver: yupResolver(formSchema),
   });
 
@@ -39,7 +43,7 @@ export default function Login() {
       } else {
         dispatch(actionLoginUser(res));
         dispatch(nextPage(1));
-        navigate("/");
+        navigate('/');
       }
     });
   };
@@ -61,7 +65,7 @@ export default function Login() {
           className="login-input"
           id="email"
           placeholder="Email address"
-          {...register("email")}
+          {...register('email')}
         />
         <span className="error">{errors.email?.message}</span>
 
@@ -73,14 +77,14 @@ export default function Login() {
           id="password"
           className="login-input"
           placeholder="Password"
-          {...register("password")}
+          {...register('password')}
         />
         <span className="error">{errors.password?.message}</span>
 
         <input className="submit" type="submit" value="Login" />
         {errorMessage}
         <span className="footer">
-          Don’t have an account? <Link to={"/sign-up"}>Sign Up</Link>.
+          Don’t have an account? <Link to="/sign-up">Sign Up</Link>.
         </span>
       </form>
     </div>

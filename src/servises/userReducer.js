@@ -1,21 +1,21 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isLogged: false,
   user: {
     user: {
-      username: "",
-      email: "",
-      token: "",
-      image: "",
+      username: '',
+      email: '',
+      token: '',
+      image: '',
     },
   },
-  token: "",
+  token: '',
 };
 
 const userSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState,
   reducers: {
     registerUser(state, action) {
@@ -27,13 +27,13 @@ const userSlice = createSlice({
       state.isLogged = false;
       state.user = {
         user: {
-          username: "",
-          email: "",
-          token: "",
-          image: "",
+          username: '',
+          email: '',
+          token: '',
+          image: '',
         },
       };
-      state.token = "";
+      state.token = '';
     },
     actionLoginUser(state, action) {
       state.token = action.payload.user.token;

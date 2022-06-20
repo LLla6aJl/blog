@@ -1,27 +1,35 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { createArticle } from "../../servises/servises";
-import { nextPage } from "../../servises/ArticlesReducer";
-import * as Yup from "yup";
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+
+import { createArticle } from '../../servises/servises';
+import {
+  nextPage,
+  editArticle,
+  actionArticles,
+} from '../../servises/ArticlesReducer';
 
 export default function CreateArticle() {
   const dispatch = useDispatch();
   const edit = useSelector((state) => state.articles.edit);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.user.token);
   const title = useSelector((state) => state.articles.article.title);
   const description = useSelector(
     (state) => state.articles.article.description
   );
   const text = useSelector((state) => state.articles.article.body);
+  const slug = useSelector((state) => state.articles.article.slug);
   const tagListState = useSelector((state) => state.articles.article.tagList);
   const [tagsList, setTagList] = useState(edit ? tagListState : []);
   const [error, setError] = useState(false);
-  const [tag, setTag] = useState("");
+  const [tag, setTag] = useState('');
 
   const handleChange = (event) => {
     setTag(event.target.value);
@@ -31,16 +39,16 @@ export default function CreateArticle() {
     event.stopPropagation();
     if (tag) {
       setTagList((prevState) => [...prevState, tag]);
-      setTag("");
+      setTag('');
     }
   };
 
   const formSchema = Yup.object().shape({
-    title: Yup.string().required("Обязательное поле"),
+    title: Yup.string().required('Обязательное поле'),
 
-    description: Yup.string().required("Обязательное поле"),
+    description: Yup.string().required('Обязательное поле'),
 
-    text: Yup.string().required("Обязательное поле"),
+    text: Yup.string().required('Обязательное поле'),
   });
 
   const {
@@ -48,16 +56,36 @@ export default function CreateArticle() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: 'onBlur',
     resolver: yupResolver(formSchema),
   });
   const onSubmit = (data) => {
-    createArticle(data, token, tagsList).then((res) => {
+    createArticle(data, token, tagsList, edit, slug).then((res) => {
       if (res.errors) {
         setError(true);
       } else {
+        const fetchArticles = (offset) =>
+          // eslint-disable-next-line no-shadow
+          function (dispatch) {
+            const requestOptions = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${token}`,
+              },
+              redirect: 'follow',
+            };
+            fetch(
+              `https://kata.academy:8021/api/articles?limit=5&offset=${offset}`,
+              requestOptions
+            )
+              .then((response) => response.json())
+              .then((json) => dispatch(actionArticles(json)));
+          };
+        dispatch(fetchArticles(0));
+        dispatch(editArticle(false));
         dispatch(nextPage(1));
-        navigate("/");
+        navigate('/');
       }
     });
   };
@@ -67,13 +95,15 @@ export default function CreateArticle() {
   ) : null;
 
   const flex = {
-    display: "flex",
+    display: 'flex',
   };
 
   return (
     <div className="article full-size">
       <form className="registration" onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="form-header">Create new article</h1>
+        <h1 className="form-header">
+          {edit ? 'Edit article' : 'Create new article'}
+        </h1>
         <label className="label-button" htmlFor="title">
           Title
         </label>
@@ -83,7 +113,7 @@ export default function CreateArticle() {
           id="title"
           defaultValue={edit ? title : null}
           placeholder="title"
-          {...register("title")}
+          {...register('title')}
         />
         <span className="error">{errors.title?.message}</span>
 
@@ -96,7 +126,7 @@ export default function CreateArticle() {
           id="description"
           defaultValue={edit ? description : null}
           placeholder="Short description"
-          {...register("description")}
+          {...register('description')}
         />
         <span className="error">{errors.description?.message}</span>
 
@@ -109,8 +139,8 @@ export default function CreateArticle() {
           rows="6"
           defaultValue={edit ? text : null}
           placeholder="Text"
-          {...register("text")}
-        ></textarea>
+          {...register('text')}
+        />
         <span className="error">{errors.text?.message}</span>
         <label className="label-button" htmlFor="new_password">
           Tags
@@ -124,14 +154,15 @@ export default function CreateArticle() {
                 className="tag-item"
                 value={item}
                 key={i}
-              ></input>
+              />
               <div>
                 <button
                   className="button-tag delete"
+                  type="button"
                   key={i}
                   onClick={() =>
                     setTagList((currentItems) =>
-                      currentItems.filter((item, index) => index !== i)
+                      currentItems.filter((it, index) => index !== i)
                     )
                   }
                 >
@@ -150,7 +181,7 @@ export default function CreateArticle() {
           />
           <button
             type="button"
-            onClick={() => setTag("")}
+            onClick={() => setTag('')}
             className="button-tag delete"
           >
             Delete
