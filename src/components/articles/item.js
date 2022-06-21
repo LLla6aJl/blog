@@ -7,7 +7,6 @@
 /* eslint-disable react/destructuring-assignment */
 import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { actionArticles } from '../../servises/ArticlesReducer';
@@ -28,15 +27,13 @@ export default function Item(item) {
     favoritesCount,
   } = item.item;
   const { username, image } = author;
-  const [checkFavorite, setCheckFavorite] = useState(favorited);
-  const [favoriteCount, setFavoriteCount] = useState(favoritesCount);
   const token = useSelector((state) => state.user.token);
   const isLogged = useSelector((state) => state.user.isLogged);
   const offset = useSelector((state) => state.articles.offset);
   const likeArticle = (slug) => {
     // eslint-disable-next-line no-useless-return
     if (!isLogged) return;
-    fetchLike(slug, token, checkFavorite).then((res) => {
+    fetchLike(slug, token, favorited).then(() => {
       const fetchArticles = (offset) =>
         // eslint-disable-next-line no-shadow
         function (dispatch) {
@@ -69,11 +66,11 @@ export default function Item(item) {
             </Link>
             <label className="label-like">
               <img
-                src={checkFavorite ? redheart : whiteheart}
+                src={favorited ? redheart : whiteheart}
                 alt="like"
                 onClick={() => likeArticle(slug)}
               />
-              <span className="like-count">{favoriteCount}</span>
+              <span className="like-count">{favoritesCount}</span>
             </label>
           </div>
           <div className="tags">
