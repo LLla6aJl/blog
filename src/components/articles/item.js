@@ -76,7 +76,7 @@ export default function Item(item) {
           <div className="tags">
             {tagList.map((tag, key) => (
               <span className="tag" key={key}>
-                {tag}
+                {truncate.apply(tag, [10, false])}
               </span>
             ))}
           </div>
@@ -104,7 +104,7 @@ export default function Item(item) {
           />
         </div>
       </div>
-      <div className="text">{description}</div>
+      <div className="text">{truncate.apply(description, [100, false])}</div>
     </li>
   );
 }

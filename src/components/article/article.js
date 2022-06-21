@@ -9,7 +9,11 @@ import { Spin, Popconfirm } from 'antd';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
-import { fetchLike, fetchDeleteArticle } from '../../servises/servises';
+import {
+  fetchLike,
+  fetchDeleteArticle,
+  truncate,
+} from '../../servises/servises';
 import {
   getArticle,
   actionArticles,
@@ -167,7 +171,7 @@ export default function Article() {
                 to={`/articles/${slug}`}
                 className="article-name article-name-wrap"
               >
-                {title}
+                {truncate.apply(title, [58, false])}
               </Link>
               <label className="label-like">
                 <img
@@ -182,7 +186,7 @@ export default function Article() {
               {tagList.map((tag, key) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <span className="tag" key={key}>
-                  {tag}
+                  {truncate.apply(tag, [10, false])}
                 </span>
               ))}
             </div>
