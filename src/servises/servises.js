@@ -137,3 +137,15 @@ export const styleError = {
   borderColor: 'red',
   boxShadow: '1px 2px 9px #F4AAB9',
 };
+
+export function truncate(numberSymbols, useWordBoundary) {
+  if (this.length <= numberSymbols) {
+    return this;
+  }
+  const subString = this.substring(0, numberSymbols - 1);
+  return `${
+    useWordBoundary
+      ? subString.substring(0, subString.lastIndexOf(' '))
+      : subString
+  }...`;
+}

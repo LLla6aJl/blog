@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 import { actionArticles } from '../../servises/ArticlesReducer';
-import { fetchLike } from '../../servises/servises';
+import { fetchLike, truncate } from '../../servises/servises';
 import whiteheart from '../article/white-heart.svg';
 import redheart from '../article/red-heart.svg';
 
@@ -62,7 +62,7 @@ export default function Item(item) {
         <div className="title">
           <div className="title-text">
             <Link to={`/articles/${slug}`} className="article-name">
-              {title}
+              {truncate.apply(title, [58, false])}
             </Link>
             <label className="label-like">
               <img

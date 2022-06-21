@@ -163,7 +163,10 @@ export default function Article() {
         <div className="header">
           <div className="title">
             <div className="title-text">
-              <Link to={`/articles/${slug}`} className="article-name">
+              <Link
+                to={`/articles/${slug}`}
+                className="article-name article-name-wrap"
+              >
                 {title}
               </Link>
               <label className="label-like">
