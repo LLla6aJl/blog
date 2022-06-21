@@ -32,7 +32,7 @@ export default function CreateArticle() {
   const [error, setError] = useState(false);
   const [tag, setTag] = useState('');
   const userNameLogged = useSelector((state) => state.user.user.user.username);
-  if (author !== userNameLogged) navigate('/');
+  if (author !== userNameLogged && author !== '') navigate('/');
   const handleChange = (event) => {
     setTag(event.target.value);
   };

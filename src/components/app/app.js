@@ -65,6 +65,7 @@ function App() {
           <Route path="/profile" element={<EditProfile />} />
           <Route path="/new-article" element={<CreateArticle />} />
           <Route path="/articles/:id/edit" element={<CreateArticle />} />
+          <Route path="*" element={<Articles />} />
         </Routes>
       </div>
     </div>

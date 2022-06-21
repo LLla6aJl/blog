@@ -57,6 +57,7 @@ const articlesSlice = createSlice({
         body: '',
         createdAt: '',
         updatedAt: '',
+        author: { username: '', image: '' },
         favorited: false,
         favoritesCount: 0,
         tagList: [],
