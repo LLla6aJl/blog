@@ -69,6 +69,25 @@ export default function Article() {
       if (!isLogged) return;
       fetchLike(slug, token, favorited).then((res) => {
         dispatch(likeArticleAction(res));
+        const fetchArticles = (offset) =>
+          // eslint-disable-next-line no-shadow
+          function (dispatch) {
+            const requestOptions = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${token}`,
+              },
+              redirect: 'follow',
+            };
+            fetch(
+              `https://kata.academy:8021/api/articles?limit=5&offset=${offset}`,
+              requestOptions
+            )
+              .then((response) => response.json())
+              .then((json) => dispatch(actionArticles(json)));
+          };
+        dispatch(fetchArticles(0));
       });
     };
 

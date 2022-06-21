@@ -26,11 +26,13 @@ export default function CreateArticle() {
   );
   const text = useSelector((state) => state.articles.article.body);
   const slug = useSelector((state) => state.articles.article.slug);
+  const author = useSelector((state) => state.articles.article.author.username);
   const tagListState = useSelector((state) => state.articles.article.tagList);
   const [tagsList, setTagList] = useState(edit ? tagListState : []);
   const [error, setError] = useState(false);
   const [tag, setTag] = useState('');
-
+  const userNameLogged = useSelector((state) => state.user.user.user.username);
+  if (author !== userNameLogged) navigate('/');
   const handleChange = (event) => {
     setTag(event.target.value);
   };

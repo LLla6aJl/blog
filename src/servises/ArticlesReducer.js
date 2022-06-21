@@ -12,6 +12,7 @@ const initialState = {
     createdAt: '',
     updatedAt: '',
     favorited: false,
+    author: { username: '', image: '' },
     favoritesCount: 0,
     tagList: [],
   },

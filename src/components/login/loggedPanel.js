@@ -20,7 +20,7 @@ export default function LoggedPanel() {
       <Link className="create-article" to="/new-article">
         Create article
       </Link>
-      <Link className="profile" to="/profile">
+      <Link className="profile-panel" to="/profile">
         <span className="profile-name">{userName}</span>{' '}
       </Link>
       <Link className="profile" to="/profile">

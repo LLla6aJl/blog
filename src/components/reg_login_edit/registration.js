@@ -124,8 +124,13 @@ export default function Registration() {
         <span className="error">{errors.cpassword?.message}</span>
         <div className="line" />
         <label className="pers-inf" htmlFor="pers-inf">
-          <input type="checkbox" {...register('persInf')} id="pers-inf" />I
-          agree to the processing of my personal information
+          <input
+            className="pers-input-check"
+            type="checkbox"
+            {...register('persInf')}
+            id="pers-inf"
+          />
+          I agree to the processing of my personal information
         </label>
         <span className="error">{errors.persInf?.message}</span>
         <input className="submit" type="submit" value="Create" />
