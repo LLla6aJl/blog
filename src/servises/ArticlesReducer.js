@@ -37,6 +37,7 @@ const articlesSlice = createSlice({
       state.article = action.payload.article;
       state.offset = 0;
     },
+
     likeArticleAction(state, action) {
       state.article.favorited = action.payload.article.favorited;
       if (action.payload.article.favorited) {
@@ -69,6 +70,7 @@ export const {
   nextPage,
   getArticle,
   likeArticleAction,
+  likearticle,
   editArticle,
   deleteArticle,
 } = articlesSlice.actions;

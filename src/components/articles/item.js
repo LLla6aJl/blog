@@ -5,16 +5,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-shadow */
 /* eslint-disable react/destructuring-assignment */
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { actionArticles } from '../../servises/ArticlesReducer';
 import { fetchLike } from '../../servises/servises';
 import whiteheart from '../article/white-heart.svg';
 import redheart from '../article/red-heart.svg';
 
 export default function Item(item) {
+  const dispatch = useDispatch();
   const {
     slug,
     title,
@@ -26,22 +28,35 @@ export default function Item(item) {
     favoritesCount,
   } = item.item;
   const { username, image } = author;
-
   const [checkFavorite, setCheckFavorite] = useState(favorited);
   const [favoriteCount, setFavoriteCount] = useState(favoritesCount);
   const token = useSelector((state) => state.user.token);
   const isLogged = useSelector((state) => state.user.isLogged);
+  const offset = useSelector((state) => state.articles.offset);
   const likeArticle = (slug) => {
     // eslint-disable-next-line no-useless-return
     if (!isLogged) return;
-    fetchLike(slug, token, checkFavorite);
-    if (!checkFavorite) {
-      setCheckFavorite(true);
-      setFavoriteCount(favoriteCount + 1);
-    } else {
-      setCheckFavorite(false);
-      setFavoriteCount(favoriteCount - 1);
-    }
+    fetchLike(slug, token, checkFavorite).then((res) => {
+      const fetchArticles = (offset) =>
+        // eslint-disable-next-line no-shadow
+        function (dispatch) {
+          const requestOptions = {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8',
+              Authorization: `Bearer ${isLogged ? token : null}`,
+            },
+            redirect: 'follow',
+          };
+          fetch(
+            `https://kata.academy:8021/api/articles?limit=5&offset=${offset}`,
+            requestOptions
+          )
+            .then((response) => response.json())
+            .then((json) => dispatch(actionArticles(json)));
+        };
+      dispatch(fetchArticles(offset));
+    });
   };
 
   return (
