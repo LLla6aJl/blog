@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -17,6 +17,8 @@ import {
 
 export default function CreateArticle() {
   const dispatch = useDispatch();
+  useEffect(() => () => dispatch(editArticle(false)), [dispatch]);
+
   const edit = useSelector((state) => state.articles.edit);
   const navigate = useNavigate();
   const token = useSelector((state) => state.user.token);

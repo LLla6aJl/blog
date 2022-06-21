@@ -10,7 +10,7 @@ import LoginPanel from '../login/loginPanel';
 import Registration from '../reg_login_edit/registration';
 import Login from '../reg_login_edit/login';
 import EditProfile from '../reg_login_edit/editProfile';
-import { actionArticles } from '../../servises/ArticlesReducer';
+import { actionArticles, editArticle } from '../../servises/ArticlesReducer';
 import CreateArticle from '../article/createArticle';
 
 import classes from './app.module.scss';
@@ -43,6 +43,7 @@ function App() {
           .then((json) => dispatch(actionArticles(json)));
       };
     dispatch(fetchArticles(offset));
+    dispatch(editArticle(false));
   }, [offset, dispatch, isLogged, token, edit]);
 
   return (
